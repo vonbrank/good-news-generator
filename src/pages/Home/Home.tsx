@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Container,
   Button,
@@ -19,11 +19,26 @@ import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
 import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
 import FormatAlignRightIcon from "@mui/icons-material/FormatAlignRight";
 import FormatAlignJustifyIcon from "@mui/icons-material/FormatAlignJustify";
+import html2canvas from "html2canvas";
 
 const Home = () => {
   const [contentText, setContentText] = useState("");
 
   const [newsType, setNewsType] = useState("good-news-type");
+
+  const imageElementRef = useRef<HTMLDivElement | null>(null);
+
+  const handleDownloadImage = async () => {
+    const current = imageElementRef.current;
+    if (current === null) return;
+
+    const canvas = await html2canvas(current);
+    const imageUrl = canvas.toDataURL("image/png", 1.0);
+    const link = document.createElement("a");
+    link.download = "good-news.png";
+    link.href = imageUrl;
+    link.click();
+  };
 
   return (
     <Container>
@@ -56,6 +71,7 @@ const Home = () => {
               padding={"1.6rem"}
             >
               <Stack
+                ref={imageElementRef}
                 height={"auto"}
                 width="100%"
                 maxHeight={"100%"}
@@ -185,7 +201,9 @@ const Home = () => {
                 }}
                 padding={"1.2rem"}
               >
-                <Button variant="outlined">导出</Button>
+                <Button variant="outlined" onClick={handleDownloadImage}>
+                  下载
+                </Button>
                 <Button variant="outlined">复制到剪贴板</Button>
                 <Button variant="outlined">重置</Button>
               </Stack>
