@@ -21,6 +21,25 @@ import FormatAlignRightIcon from "@mui/icons-material/FormatAlignRight";
 import FormatAlignJustifyIcon from "@mui/icons-material/FormatAlignJustify";
 import html2canvas from "html2canvas";
 
+const fontFamilyDefault = `"Roboto","Helvetica","Arial",sans-serif`;
+const fontFamilySongTi = `"NSimSun","FangSong",sans`;
+const fontFamilyHeiti = `"Source Han Sans CN","Microsoft Yahei","Arial",sans-serif`;
+const fontFamilyKaiti = `"STKaiti","KaiTi",sans`;
+
+interface Fonts {
+  default: string;
+  songTi: string;
+  heiTi: string;
+  kaiTi: string;
+}
+
+const fonts: Fonts = {
+  default: fontFamilyDefault,
+  songTi: fontFamilySongTi,
+  heiTi: fontFamilyHeiti,
+  kaiTi: fontFamilyKaiti,
+};
+
 const Home = () => {
   const [contentText, setContentText] = useState("");
 
@@ -39,6 +58,14 @@ const Home = () => {
     link.href = imageUrl;
     link.click();
   };
+
+  const [textSizePt, setTextSizePt] = useState(24);
+  const textSizePx = (textSizePt * 4) / 3;
+  const textSizeRem = `${textSizePx / 10}rem`;
+  const textColor = newsType === "good-news-type" ? "#dc3023" : "#5a5a5a";
+
+  const [textAlignType, setTextAignType] = useState("center");
+  const [fontFamily, setFontFamily] = useState<keyof Fonts>("default");
 
   return (
     <Container>
@@ -75,7 +102,7 @@ const Home = () => {
                 height={"auto"}
                 width="100%"
                 maxHeight={"100%"}
-                sx={{ position: "relative" }}
+                sx={{ position: "relative", overflow: "hidden" }}
               >
                 <img
                   src={newsType === "good-news-type" ? goodNewsUrl : badNewsUrl}
@@ -89,28 +116,47 @@ const Home = () => {
                     width: "100%",
                     height: "100%",
                     "& .MuiTypography-root": {
-                      color: "#dc3023",
-                      fontSize: "3.2rem",
+                      color: textColor,
+                      fontSize: textSizeRem,
                       fontWeight: 600,
-                    },
-                    "& br": {
-                      height: "calc(3.2rem * 1.5)",
+                      textAlign: textAlignType,
+                      fontFamily: fonts[fontFamily],
+                      "&.empty-line::after": {
+                        content: `''`,
+                        display: "inline-block",
+                        width: "100%",
+                      },
                     },
                   }}
                 >
                   <Stack
                     paddingTop={"8.4rem"}
                     paddingBottom={"4.8em"}
+                    paddingX={"6.4rem"}
                     sx={{ width: "100%", height: "100%" }}
-                    alignItems={"center"}
                     justifyContent={"center"}
                   >
                     {contentText.split("\n").map((line) => (
                       <>
                         {line !== "" ? (
-                          <Typography>{line}</Typography>
+                          <>
+                            {textAlignType !== "justify" ? (
+                              <Typography>{line}</Typography>
+                            ) : (
+                              <Typography
+                                sx={{
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                }}
+                              >
+                                {line.split("").map((char, index) => (
+                                  <span key={index}>{char}</span>
+                                ))}
+                              </Typography>
+                            )}
+                          </>
                         ) : (
-                          <br></br>
+                          <Typography className="empty-line"> </Typography>
                         )}
                       </>
                     ))}
@@ -162,7 +208,14 @@ const Home = () => {
                   </SideItemBlock>
 
                   <SideItemBlock label="对齐方式">
-                    <ToggleButtonGroup exclusive size="small">
+                    <ToggleButtonGroup
+                      value={textAlignType}
+                      exclusive
+                      size="small"
+                      onChange={(_, newTextAlignType) =>
+                        setTextAignType(newTextAlignType)
+                      }
+                    >
                       <ToggleButton value="left" aria-label="left aligned">
                         <FormatAlignLeftIcon />
                       </ToggleButton>
@@ -177,14 +230,34 @@ const Home = () => {
                       </ToggleButton>
                     </ToggleButtonGroup>
                   </SideItemBlock>
-
-                  <SideItemBlock label="字体大小">
-                    <TextField select fullWidth size="small">
-                      {["5pt", "5.5pt", "6.5pt"].map((option) => (
-                        <MenuItem key={option} value={option}>
-                          {option}
-                        </MenuItem>
-                      ))}
+                  <SideItemBlock label="字号 (pt)">
+                    <TextField
+                      value={textSizePt}
+                      type="number"
+                      fullWidth
+                      size="small"
+                      onChange={(e) => {
+                        const newValue = parseFloat(e.target.value);
+                        if (!isNaN(newValue) && newValue > 0) {
+                          setTextSizePt(newValue);
+                        }
+                      }}
+                    />
+                  </SideItemBlock>
+                  <SideItemBlock label="字体">
+                    <TextField
+                      value={fontFamily}
+                      select
+                      fullWidth
+                      size="small"
+                      onChange={(e) => {
+                        setFontFamily(e.target.value as keyof Fonts);
+                      }}
+                    >
+                      <MenuItem value="default">默认</MenuItem>
+                      <MenuItem value="songTi">宋体</MenuItem>
+                      <MenuItem value="heiTi">黑体</MenuItem>
+                      <MenuItem value="kaiTi">楷体</MenuItem>
                     </TextField>
                   </SideItemBlock>
                 </Stack>
