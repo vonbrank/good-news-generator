@@ -18,6 +18,7 @@ set branch="github-page"
 cd "%DEPLOY_DIR%"
 
 echo "" > .nojekyll
+echo good-news-generator.vonbrank.com > CNAME
 
 git init
 git add .
