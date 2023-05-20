@@ -15,11 +15,13 @@
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.13.1",
     "@reduxjs/toolkit": "^1.9.5",
+    "@types/react-transition-group": "^4.4.6",
     "@types/uuid": "^9.0.1",
     "html2canvas": "^1.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
+    "react-transition-group": "^4.4.5",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
