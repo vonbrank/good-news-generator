@@ -47,16 +47,32 @@ const Home = () => {
 
   const imageElementRef = useRef<HTMLDivElement | null>(null);
 
-  const handleDownloadImage = async () => {
+  const getCurrentImageCanvas = async () => {
     const current = imageElementRef.current;
-    if (current === null) return;
+    if (current === null) return null;
 
     const canvas = await html2canvas(current);
+    return canvas;
+  };
+
+  const handleDownloadImage = async () => {
+    const canvas = await getCurrentImageCanvas();
+    if (canvas === null) return;
     const imageUrl = canvas.toDataURL("image/png", 1.0);
     const link = document.createElement("a");
     link.download = "good-news.png";
     link.href = imageUrl;
     link.click();
+  };
+
+  const handleCopyToClipBoard = async () => {
+    const canvas = await getCurrentImageCanvas();
+    if (canvas === null) return;
+    canvas.toBlob((blob) => {
+      if (blob === null) return;
+      const item = new ClipboardItem({ "image/png": blob });
+      navigator.clipboard.write([item]);
+    });
   };
 
   const [textSizePt, setTextSizePt] = useState(24);
@@ -66,6 +82,14 @@ const Home = () => {
 
   const [textAlignType, setTextAignType] = useState("center");
   const [fontFamily, setFontFamily] = useState<keyof Fonts>("default");
+
+  const handleReset = () => {
+    setNewsType("good-news-type");
+    setTextAignType("center");
+    setFontFamily("default");
+    setContentText("");
+    setTextSizePt(24);
+  };
 
   return (
     <Container>
@@ -277,8 +301,12 @@ const Home = () => {
                 <Button variant="outlined" onClick={handleDownloadImage}>
                   下载
                 </Button>
-                <Button variant="outlined">复制到剪贴板</Button>
-                <Button variant="outlined">重置</Button>
+                <Button variant="outlined" onClick={handleCopyToClipBoard}>
+                  复制到剪贴板
+                </Button>
+                <Button variant="outlined" onClick={handleReset}>
+                  重置
+                </Button>
               </Stack>
             </Stack>
           </Stack>
