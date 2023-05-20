@@ -12,6 +12,7 @@ import {
   alpha,
   Divider,
   Paper,
+  Link,
 } from "@mui/material";
 import goodNewsUrl from "../../assets/good_news.jpg";
 import badNewsUrl from "../../assets/bad_news.jpg";
@@ -22,6 +23,7 @@ import FormatAlignJustifyIcon from "@mui/icons-material/FormatAlignJustify";
 import html2canvas from "html2canvas";
 import { useAppDispatch } from "../../store/hooks";
 import { showTemporaryToastText } from "../../store/reducers/toast";
+import GitHubIcon from "@mui/icons-material/GitHub";
 
 const fontFamilyDefault = `"Roboto","Helvetica","Arial",sans-serif`;
 const fontFamilySongTi = `"NSimSun","FangSong",sans`;
@@ -330,6 +332,48 @@ const Home = () => {
           </Stack>
         </Paper>
       </Stack>
+      <Box
+        width="6.4rem"
+        height="6.4rem"
+        sx={{
+          position: "fixed",
+          top: 0,
+          right: 0,
+        }}
+      >
+        <Link
+          href="https://github.com/vonbrank/good-news-generator"
+          target="_blank"
+        >
+          <Stack
+            width="12.8rem"
+            height="12.8rem"
+            sx={{
+              backgroundColor: (theme) => theme.palette.common.black,
+              color: (theme) => theme.palette.common.white,
+              position: "absolute",
+              top: "-125%",
+              right: "-125%",
+              transform: "rotate(45deg)",
+              "&:hover .MuiSvgIcon-root": {
+                width: "3.6rem",
+                height: "3.6rem",
+              },
+            }}
+            justifyContent={"end"}
+            alignItems={"center"}
+          >
+            <GitHubIcon
+              color="inherit"
+              sx={{
+                width: "3.2rem",
+                height: "3.2rem",
+                transition: "all 0.3s",
+              }}
+            />
+          </Stack>
+        </Link>
+      </Box>
     </Container>
   );
 };
