@@ -13,6 +13,9 @@ dependencies:
   '@mui/material':
     specifier: ^5.13.1
     version: registry.npmmirror.com/@mui/material@5.13.1(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@18.0.28)(react-dom@18.2.0)(react@18.2.0)
+  html2canvas:
+    specifier: ^1.4.1
+    version: registry.npmmirror.com/html2canvas@1.4.1
   react:
     specifier: ^18.2.0
     version: registry.npmmirror.com/react@18.2.0
@@ -1272,6 +1275,13 @@ packages:
     version: 1.0.2
     dev: true
 
+  registry.npmmirror.com/base64-arraybuffer@1.0.2:
+    resolution: {integrity: sha512-I3yl4r9QB5ZRY3XuJVEPfc2XhZO6YweFPI+UovAzn+8/hb3oJ6lnysaFcjVpkCPfVWFUDvoZ8kmVDP7WyRtYtQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/base64-arraybuffer/-/base64-arraybuffer-1.0.2.tgz}
+    name: base64-arraybuffer
+    version: 1.0.2
+    engines: {node: '>= 0.6.0'}
+    dev: false
+
   registry.npmmirror.com/binary-extensions@2.2.0:
     resolution: {integrity: sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/binary-extensions/-/binary-extensions-2.2.0.tgz}
     name: binary-extensions
@@ -1412,6 +1422,14 @@ packages:
       shebang-command: registry.npmmirror.com/shebang-command@2.0.0
       which: registry.npmmirror.com/which@2.0.2
     dev: true
+
+  registry.npmmirror.com/css-line-break@2.1.0:
+    resolution: {integrity: sha512-FHcKFCZcAha3LwfVBhCQbW2nCNbkZXn7KVUJcsT5/P8YmfsVja0FMPJr0B903j/E69HUphKiV9iQArX8SDYA4w==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/css-line-break/-/css-line-break-2.1.0.tgz}
+    name: css-line-break
+    version: 2.1.0
+    dependencies:
+      utrie: registry.npmmirror.com/utrie@1.0.2
+    dev: false
 
   registry.npmmirror.com/csstype@3.1.2:
     resolution: {integrity: sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/csstype/-/csstype-3.1.2.tgz}
@@ -1869,6 +1887,16 @@ packages:
     version: 3.3.2
     dependencies:
       react-is: registry.npmmirror.com/react-is@16.13.1
+    dev: false
+
+  registry.npmmirror.com/html2canvas@1.4.1:
+    resolution: {integrity: sha512-fPU6BHNpsyIhr8yyMpTLLxAbkaK8ArIBcmZIRiBLiDhjeqvXolaEmDGmELFuX9I4xDcaKKcJl+TKZLqruBbmWA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/html2canvas/-/html2canvas-1.4.1.tgz}
+    name: html2canvas
+    version: 1.4.1
+    engines: {node: '>=8.0.0'}
+    dependencies:
+      css-line-break: registry.npmmirror.com/css-line-break@2.1.0
+      text-segmentation: registry.npmmirror.com/text-segmentation@1.0.3
     dev: false
 
   registry.npmmirror.com/ignore@5.2.4:
@@ -2505,6 +2533,14 @@ packages:
     engines: {node: '>= 0.4'}
     dev: false
 
+  registry.npmmirror.com/text-segmentation@1.0.3:
+    resolution: {integrity: sha512-iOiPUo/BGnZ6+54OsWxZidGCsdU8YbE4PSpdPinp7DeMtUJNJBoJ/ouUSTJjHkh1KntHaltHl/gDs2FC4i5+Nw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/text-segmentation/-/text-segmentation-1.0.3.tgz}
+    name: text-segmentation
+    version: 1.0.3
+    dependencies:
+      utrie: registry.npmmirror.com/utrie@1.0.2
+    dev: false
+
   registry.npmmirror.com/text-table@0.2.0:
     resolution: {integrity: sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/text-table/-/text-table-0.2.0.tgz}
     name: text-table
@@ -2577,6 +2613,14 @@ packages:
     dependencies:
       punycode: registry.npmmirror.com/punycode@2.3.0
     dev: true
+
+  registry.npmmirror.com/utrie@1.0.2:
+    resolution: {integrity: sha512-1MLa5ouZiOmQzUbjbu9VmjLzn1QLXBhwpUa7kdLUQK+KQ5KA9I1vk5U4YHe/X2Ch7PYnJfWuWT+VbuxbGwljhw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/utrie/-/utrie-1.0.2.tgz}
+    name: utrie
+    version: 1.0.2
+    dependencies:
+      base64-arraybuffer: registry.npmmirror.com/base64-arraybuffer@1.0.2
+    dev: false
 
   registry.npmmirror.com/vite@4.3.2(sass@1.62.1):
     resolution: {integrity: sha512-9R53Mf+TBoXCYejcL+qFbZde+eZveQLDYd9XgULILLC1a5ZwPaqgmdVpL8/uvw2BM/1TzetWjglwm+3RO+xTyw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vite/-/vite-4.3.2.tgz}
