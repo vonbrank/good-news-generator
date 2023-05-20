@@ -20,6 +20,8 @@ import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
 import FormatAlignRightIcon from "@mui/icons-material/FormatAlignRight";
 import FormatAlignJustifyIcon from "@mui/icons-material/FormatAlignJustify";
 import html2canvas from "html2canvas";
+import { useAppDispatch } from "../../store/hooks";
+import { showTemporaryToastText } from "../../store/reducers/toast";
 
 const fontFamilyDefault = `"Roboto","Helvetica","Arial",sans-serif`;
 const fontFamilySongTi = `"NSimSun","FangSong",sans`;
@@ -65,13 +67,29 @@ const Home = () => {
     link.click();
   };
 
+  const dispatch = useAppDispatch();
+
   const handleCopyToClipBoard = async () => {
     const canvas = await getCurrentImageCanvas();
     if (canvas === null) return;
     canvas.toBlob((blob) => {
-      if (blob === null) return;
+      if (blob === null) {
+        dispatch(
+          showTemporaryToastText({
+            severity: "error",
+            message: "图片渲染失败，请重试",
+          })
+        );
+        return;
+      }
       const item = new ClipboardItem({ "image/png": blob });
       navigator.clipboard.write([item]);
+      dispatch(
+        showTemporaryToastText({
+          severity: "info",
+          message: "图片已复制到剪贴板",
+        })
+      );
     });
   };
 
