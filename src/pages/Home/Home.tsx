@@ -13,6 +13,8 @@ import {
   Divider,
   Paper,
   Link,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import goodNewsUrl from "../../assets/good_news.jpg";
 import badNewsUrl from "../../assets/bad_news.jpg";
@@ -111,6 +113,34 @@ const Home = () => {
     setTextSizePt(24);
   };
 
+  const theme = useTheme();
+  const breakpointDownSm = useMediaQuery(theme.breakpoints.down("md"));
+
+  const buttonGroup = (
+    <Stack
+      direction={"row"}
+      justifyContent={"space-between"}
+      sx={{
+        position: "sticky",
+        bottom: 0,
+        backgroundColor: (theme) => theme.palette.common.white,
+        boxShadow: (theme) =>
+          `0 1.2rem 2.4rem ${alpha(theme.palette.common.black, 1)}`,
+      }}
+      padding={"1.2rem"}
+    >
+      <Button variant="outlined" onClick={handleDownloadImage}>
+        下载
+      </Button>
+      <Button variant="outlined" onClick={handleCopyToClipBoard}>
+        复制到剪贴板
+      </Button>
+      <Button variant="outlined" onClick={handleReset}>
+        重置
+      </Button>
+    </Stack>
+  );
+
   return (
     <Container>
       <Stack sx={{ height: "100vh", padding: "6.4rem" }}>
@@ -120,17 +150,23 @@ const Home = () => {
         <Paper
           sx={{
             width: "100%",
-            flex: 3,
+            flex: 1,
             height: 0,
-            overflow: "hidden",
           }}
           elevation={6}
         >
-          <Stack direction={"row"} height="100%">
+          <Stack
+            direction={breakpointDownSm ? "column" : "row"}
+            height="100%"
+            sx={{
+              overflowX: "hidden",
+              overflow: breakpointDownSm ? "auto" : "hidden",
+            }}
+          >
             <Stack
               sx={{
-                flex: 5,
-                width: 0,
+                flex: breakpointDownSm ? "0 1 auto" : 5,
+                width: breakpointDownSm ? "100%" : 0,
                 "& img": {
                   maxWidth: "100%",
                   maxHeight: "100%",
@@ -208,9 +244,15 @@ const Home = () => {
                 </Stack>
               </Stack>
             </Stack>
-            <Divider orientation="vertical" />
+            <Divider
+              orientation={breakpointDownSm ? "horizontal" : "vertical"}
+            />
             <Stack
-              sx={{ flex: 3, overflowY: "auto", position: "relative" }}
+              sx={{
+                flex: breakpointDownSm ? "0 1 auto" : 3,
+                overflowY: breakpointDownSm ? "visible" : "auto",
+                position: "relative",
+              }}
               spacing="3.2rem"
               justifyContent={"space-between"}
             >
@@ -306,29 +348,13 @@ const Home = () => {
                   </SideItemBlock>
                 </Stack>
               </Stack>
-              <Stack
-                direction={"row"}
-                justifyContent={"space-between"}
-                sx={{
-                  position: "sticky",
-                  bottom: 0,
-                  backgroundColor: (theme) => theme.palette.common.white,
-                  boxShadow: (theme) =>
-                    `0 1.2rem 2.4rem ${alpha(theme.palette.common.black, 1)}`,
-                }}
-                padding={"1.2rem"}
-              >
-                <Button variant="outlined" onClick={handleDownloadImage}>
-                  下载
-                </Button>
-                <Button variant="outlined" onClick={handleCopyToClipBoard}>
-                  复制到剪贴板
-                </Button>
-                <Button variant="outlined" onClick={handleReset}>
-                  重置
-                </Button>
-              </Stack>
+              {!breakpointDownSm && buttonGroup}
             </Stack>
+            {breakpointDownSm && (
+              <Stack justifyContent={"flex-end"} sx={{ flex: 1 }}>
+                {buttonGroup}
+              </Stack>
+            )}
           </Stack>
         </Paper>
       </Stack>
